@@ -23,9 +23,10 @@ npm build
 
 ### Sample REST Calls:
 
+# add new academy item
+
 POST http://localhost:9090/academy
 
-# add new academy item
 ```bash
 {
     "name":"Eran Peled",
@@ -48,7 +49,7 @@ DELETE http://localhost:9090/academy/delete/60fbd4a5c0e6850ef3951874
 where 60fbd4a5c0e6850ef3951874 is the ID of the document.
 
 # Un-delete academy item
-DELETE http://localhost:9090/academy/restore/60fbd4a5c0e6850ef3951874
+PUT http://localhost:9090/academy/restore/60fbd4a5c0e6850ef3951874
 where 60fbd4a5c0e6850ef3951874 is the ID of the document.
 
 # GET academy item
