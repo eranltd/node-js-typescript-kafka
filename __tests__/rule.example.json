@@ -1,0 +1,99 @@
+{
+    "name": "new_rule",
+    "entities": [
+        "job"
+    ],
+    "conditions": {
+        "all": [
+            {
+                "fact": "account_id",
+                "entity": "account",
+                "operator": "equal",
+                "value": "818",
+                "mainConditionId": false
+            }
+        ]
+    },
+    "events": [
+        {
+            "type": "notification",
+            "notify_medium": "sms",
+            "receiverType": "client",
+            "message_subject_json": {
+                "blocks": [
+                    {
+                        "key": "akvig",
+                        "text": "Update from {{company_name}} ",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [
+                            {
+                                "offset": 12,
+                                "length": 16,
+                                "key": 0
+                            }
+                        ],
+                        "data": {}
+                    }
+                ],
+                "entityMap": {
+                    "0": {
+                        "type": "SHORT_CODE",
+                        "mutability": "IMMUTABLE",
+                        "data": {
+                            "shortCode": "company_name"
+                        }
+                    }
+                }
+            },
+            "message_from": "Eran Peled",
+            "message_json": {
+                "blocks": [
+                    {
+                        "key": "1ek4a",
+                        "text": "Hey  {{client_name}}  ",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [
+                            {
+                                "offset": 5,
+                                "length": 15,
+                                "key": 0
+                            }
+                        ],
+                        "data": {}
+                    }
+                ],
+                "entityMap": {
+                    "0": {
+                        "type": "SHORT_CODE",
+                        "mutability": "IMMUTABLE",
+                        "data": {
+                            "shortCode": "client_name"
+                        }
+                    }
+                }
+            },
+            "time_interval": {
+                "value": 15,
+                "operator": "after",
+                "time_field": "job_amount_due_date",
+                "time_unit": "minutes",
+                "time_field_friendly_string": "amount due date"
+            },
+            "working_hours": {
+                "dnd": false,
+                "from": "09:00",
+                "to": "17:00"
+            },
+            "message_subject_template": "Update from {{company_name}} ",
+            "message_template": "<p>Hey  {{client_name}}&nbsp;&nbsp;</p>\n"
+        }
+    ],
+    "createdAt": "2020-10-10",
+    "updatedAt": "2020-10-10",
+    "enabled": true,
+    "deleted": true
+}

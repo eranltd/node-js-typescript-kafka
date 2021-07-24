@@ -1,0 +1,6 @@
+version: '2.3'
+services:
+  web:
+    build:
+      target: production
+    command: node build/index.js
