@@ -2,7 +2,7 @@ version: '2.3'
 services:
   web:
     build:
-      context: ~/Documents/GitHub/automation/automation-rules-engine
+      context: ~/Documents/GitHub/academy/
       dockerfile: Dockerfile
       target: base
     ports:
@@ -11,4 +11,4 @@ services:
     environment:
         ENV: staging
         PORT: 9090
-        DB_MONGO_CLOUD_URL: docker.for.mac.host.internal:27017/automation?readPreference=primary&appname=RulesEngineMS
+        DB_MONGO_CLOUD_URL: docker.for.mac.host.internal:27017/academy?readPreference=primary&appname=RulesEngineMS
