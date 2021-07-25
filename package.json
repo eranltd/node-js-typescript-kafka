@@ -1,7 +1,7 @@
 {
-  "name": "automation-rules-engine",
+  "name": "node-js-mongo-db-boilerplate",
   "version": "1.0.0",
-  "description": "Workiz Automation : RulesEngine",
+  "description": "Workiz Academy : MongoDB",
   "main": "build/index.js",
   "scripts": {
     "build-image": "COMMIT_SHA=$(git rev-parse --verify HEAD) && docker build --build-arg _env=staging -t gcr.io/decoded-agency-207514/automation-rules-engine:$COMMIT_SHA --no-cache . && docker push gcr.io/decoded-agency-207514/automation-rules-engine:$COMMIT_SHA",
@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Workiz/automation-rules-engine.git"
+    "url": "git+https://github.com/Workiz/node-js-mongodb-mongoose-boilerplate"
   },
   "author": "Workiz Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Workiz/automation-rules-engine/issues"
+    "url": "https://github.com/Workiz/node-js-mongodb-mongoose-boilerplate/issues"
   },
-  "homepage": "https://github.com/Workiz/automation-rules-engine#readme",
+  "homepage": "https://github.com/Workiz/node-js-mongodb-mongoose-boilerplate#readme",
   "jest": {
     "moduleFileExtensions": [
       "js",
