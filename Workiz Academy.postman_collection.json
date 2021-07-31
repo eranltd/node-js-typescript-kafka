@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "db85ec63-fec6-4424-b75d-6769cb0ee650",
+		"name": "Workiz Academy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add New Academy Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Eran Peled\",\n    \"ID\" : 303174890,\n    \"projects\": [\n        {\n            \"name\":\"mongodb\",\n            \"type\":\"lecture\"\n        },\n        {\n            \"name\":\"nodejs\",\n            \"type\":\"lecture\"\n        }\n    ]\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/academy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"academy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Academy Item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/academy/delete/60fbd4a5c0e6850ef3951874",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"academy",
+						"delete",
+						"60fbd4a5c0e6850ef3951874"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restore Deleted Academy Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/academy/restore/60fbd4a5c0e6850ef3951874",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"academy",
+						"restore",
+						"60fbd4a5c0e6850ef3951874"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Acdemy Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/academy/60fbd4a5c0e6850ef3951874",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"academy",
+						"60fbd4a5c0e6850ef3951874"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an specific Academy Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deleted\": false,\n    \"name\": \"eran peled - 2\",\n    \"ID\": 2039926872,\n    \"projects\": [\n        {\n            \"name\": \"mongodb\",\n            \"type\": \"lecture\"\n        },\n        {\n            \"name\": \"nodejs\",\n            \"type\": \"lecture\"\n        }\n    ],\n    \"createdAt\": \"2021-07-24T08:51:49.087Z\",\n    \"updatedAt\": \"2021-07-24T08:57:51.470Z\",\n    \"__v\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/academy/60fbd4a5c0e6850ef3951874",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"academy",
+						"60fbd4a5c0e6850ef3951874"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
