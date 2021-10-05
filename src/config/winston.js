@@ -31,16 +31,6 @@ colorize - Colorize the output. This can be helpful when looking at console logs
     });
 
     var options = {
-      file: {
-        level: 'info',
-        filename: `${appRoot}/log/activity.log`,
-        handleExceptions: true,
-        json: true,
-        maxsize: 5242880, // 5MB
-        maxFiles: 5,
-        colorize: false,
-        timestamp: true
-      },
         console: {
           level: 'debug',
           handleExceptions: true,
@@ -56,7 +46,6 @@ colorize - Colorize the output. This can be helpful when looking at console logs
           myFormat
         ),
         transports: [
-          new transports.File(options.file),
           new transports.Console(options.console)
         ],
         exitOnError: false, // do not exit on handled exceptions
