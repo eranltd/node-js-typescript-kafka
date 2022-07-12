@@ -1,4 +1,6 @@
-# Workiz ACADEMY : MONGO DB Via Mongoose
+# NODE-JS, TypeScript and PostgreSQL with Kafka
+
+//TODO: add instructions how to configure the docker, and set both kafka and postgres
 
 ## Getting Started 🚀
 

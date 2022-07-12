@@ -14,7 +14,6 @@ import {loadAllMiddlewares} from './middlewares/middlewares';
 /*Init Services  */
 
 import {loadAllServices} from './services/services';
-// const mongoose = require('mongoose');
 
 const app = express();
 app.set('view engine', 'html');

@@ -55,6 +55,7 @@
     "express-validator": "^6.11.1",
     "fs": "0.0.1-security",
     "json-rules-engine": "^6.1.2",
+    "kafkajs": "^2.1.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.12.9",
     "morgan": "^1.10.0",
