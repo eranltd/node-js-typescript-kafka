@@ -1,26 +1,60 @@
 # NODE-JS, TypeScript and PostgreSQL with Kafka
 
-//TODO: add instructions how to configure the docker, and set both kafka and postgres
+This is a simple implementation of nodejs that supports Kafka.
+For the simplicity of the implementation, we are using Kafka using Docker image.
+
+Each 5 seconds, this server will produce a message going into the topic you will configure with .env file.
+
+You have the following API Endpoints TO:
+
+1. Create new message at the topic
+2. Get the latest message from the topic
+3. Delete the latest message from the topic
+4. Clear the topic
+5. Wait for the next message to arrive (Get bulk of messages from the topic)(long pulling), given x seconds as wait time
 
 ## Getting Started 🚀
 
 ```bash
 git clone <THIS_REPO>
 npm install
+npm run dev
 ```
 
-## Development 🤓
+for this server to work properly, you need first to install the kafka image using the pre-configured Docker file: 
 
 ```bash
-npm run dev-server
+docker-compose -f /infra/K8S/kafka/docker-compose.yml up -d
 ```
 
+once you have installed the kafka image(called 'broker'), you can test it is working properly using those commands:
+
+Create new Topic
+```bash
+docker exec broker \
+kafka-topics --bootstrap-server broker:9092 \
+             --create \
+             --topic events
 ```
 
-### Build Artifacts 🛠
+Write new message to the topic
+```bash
+docker exec --interactive --tty broker \
+kafka-console-producer --bootstrap-server broker:9092 \
+                       --topic events
+
+this is my first kafka message
+hello world!
+this is my third kafka message. I’m on a roll :-D
+```
+
+Read every new message from the topic to stdout:
 
 ```bash
-npm build
+docker exec --interactive --tty broker \
+kafka-console-consumer --bootstrap-server broker:9092 \
+                       --topic events \
+                       --from-beginning
 ```
 
 ### Sample REST Calls:

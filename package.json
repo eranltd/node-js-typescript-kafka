@@ -1,31 +1,27 @@
 {
-  "name": "node-js-mongo-db-boilerplate",
+  "name": "node-js-typescript-kafka",
   "version": "1.0.0",
-  "description": "Workiz Academy : MongoDB",
+  "description": "Sample Node.JS & Kafka for learning how to...",
   "main": "build/index.js",
   "scripts": {
-    "build-image": "COMMIT_SHA=$(git rev-parse --verify HEAD) && docker build --build-arg _env=staging -t gcr.io/decoded-agency-207514/automation-rules-engine:$COMMIT_SHA --no-cache . && docker push gcr.io/decoded-agency-207514/automation-rules-engine:$COMMIT_SHA",
-    "deploy-staging": "npm run build-image && ./infra/deploy-staging.sh",
+    "dev": "NODE_ENV=development nodemon -r dotenv/config --watch  'src/**/*.ts' --exec 'ts-node' src/server.ts",
     "postversion": "git push --tags && git push --all",
-    "build-server": "tsc -p .",
+    "build": "tsc -p .",
     "clean": "rm -r build",
-    "dev-server": "NODE_ENV=development nodemon -r dotenv/config --watch  'src/**/*.ts' --exec 'ts-node' src/server.ts",
-    "dev": "run-p dev-server",
-    "build": "run-s build-server",
-    "prestart": "run-s clean build",
+    "prestart": "npm run clean && npm run build",
     "test": "NODE_ENV=development jest --setupFiles dotenv/config",
     "start": "node -r dotenv/config build/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Workiz/node-js-mongodb-mongoose-boilerplate"
+    "url": "git+https://github.com/eranltd/node-js-typescript-kafka"
   },
-  "author": "Workiz Inc.",
+  "author": "Eran Peled",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Workiz/node-js-mongodb-mongoose-boilerplate/issues"
+    "url": "https://github.com/eranltd/node-js-typescript-kafka/issues"
   },
-  "homepage": "https://github.com/Workiz/node-js-mongodb-mongoose-boilerplate#readme",
+  "homepage": "https://github.com/eranltd/node-js-typescript-kafka#readme",
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -54,13 +50,9 @@
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
     "fs": "0.0.1-security",
-    "json-rules-engine": "^6.1.2",
     "kafkajs": "^2.1.0",
-    "lodash": "^4.17.21",
-    "mongoose": "^5.12.9",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
-    "util": "^0.12.3",
     "winston": "^3.3.3"
   },
   "devDependencies": {
