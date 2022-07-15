@@ -1,6 +1,6 @@
 #Node foundation implementation
 
-FROM node:14
+FROM node:18
 
 # Create app directory
 WORKDIR /src/app
