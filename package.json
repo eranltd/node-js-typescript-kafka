@@ -48,7 +48,6 @@
     "config": "^3.3.6",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
-    "express-validator": "^6.11.1",
     "fs": "0.0.1-security",
     "kafkajs": "^2.1.0",
     "morgan": "^1.10.0",

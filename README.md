@@ -1,4 +1,4 @@
-# NODE-JS, TypeScript and PostgreSQL with Kafka
+# NODE-JS, TypeScript with Kafka
 
 This is a simple implementation of nodejs that supports Kafka.
 For the simplicity of the implementation, we are using Kafka using Docker image.
