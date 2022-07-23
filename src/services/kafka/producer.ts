@@ -74,7 +74,7 @@ export const kafkaProducer = async (topicName, key, value) => {
   try {
     await producer.connect();
     await producer.send({
-      topicName,
+      topic: topicName,
       messages: [
         {
           key: key,
