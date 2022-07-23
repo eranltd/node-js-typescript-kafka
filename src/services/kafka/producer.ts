@@ -14,9 +14,13 @@ const topic = "events"; //TODO: move to .env variable
 const kafka = new Kafka({ clientId, brokers });
 const producer = kafka.producer();
 
+const getRandomFriction = () => Math.floor(Math.random() * 10 ** 6) / 10 ** 6;
+
 // we define an async function that writes a new message each second
 const produce = async () => {
-  console.log("Starting to produce kafka messages every 1000 miliseconds");
+  console.log(
+    "Starting to produce dummy kafka messages every 1000 millisecond's"
+  );
   console.log(`Topic : [${topic}]`);
 
   await producer.connect();
@@ -28,8 +32,8 @@ const produce = async () => {
       const dummyLocationObject: geo_location_event = {
         uuid: MD5(new Date().getTime()),
         utc_timestamp: new Date().getTime(),
-        lat: 31 + Math.floor(Math.random() * 10 ** 6) / 10 ** 6,
-        lng: 35 + Math.floor(Math.random() * 10 ** 6) / 10 ** 6,
+        lat: 31 + getRandomFriction(),
+        lng: 35 + getRandomFriction(),
         authorization_token: MD5("some dummy string"),
       };
 
@@ -43,7 +47,7 @@ const produce = async () => {
         ],
       });
 
-      // if the message is written successfully, log it and increment `i`
+      // if the message is written successfully, log it
       console.log("produced to kafka: ", JSON.stringify(dummyLocationObject));
     } catch (err) {
       console.error("could not write message " + err);
