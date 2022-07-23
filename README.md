@@ -1,17 +1,21 @@
 # NODE-JS, TypeScript with Kafka
 
-This is a simple implementation of nodejs that supports Kafka.
+This is a simple implementation of nodejs app that demonstrate Kafka usage.
 For the simplicity of the implementation, we are using Kafka using Docker image.
 
 Each 5 seconds, this server will produce a message going into the topic you will configure with .env file.
 
 You have the following API Endpoints TO:
 
-1. Create new message at the topic
-2. Get the latest message from the topic
-3. Delete the latest message from the topic
-4. Clear the topic
-5. Wait for the next message to arrive (Get bulk of messages from the topic)(long pulling), given x seconds as wait time
+1. POST /events/{topic_name}
+Produce a message to a topic
+The body is the message in JSON format.
+This will place a new message in the topic named topic_name.
+
+2. GET /events/{topic_name}?timeout={ms}
+Gets the next message from topic_name.
+Will return 204 if there’s no message in the topic after the timeout has elapsed.
+If a timeout is not specified, a default of 10 seconds should be used.
 
 ## Getting Started 🚀
 
@@ -55,62 +59,4 @@ docker exec --interactive --tty broker \
 kafka-console-consumer --bootstrap-server broker:9092 \
                        --topic events \
                        --from-beginning
-```
-
-### Sample REST Calls:
-
-# add new academy item
-
-POST http://localhost:9090/academy
-
-```bash
-{
-    "name":"Eran Peled",
-    "ID" : 30203023,
-    "projects": [
-        {
-            "name":"mongodb",
-            "type":"lecture"
-        },
-        {
-            "name":"nodejs",
-            "type":"lecture"
-        }
-    ]
-}
-```
-
-# delete academy item
-DELETE http://localhost:9090/academy/delete/60fbd4a5c0e6850ef3951874
-where 60fbd4a5c0e6850ef3951874 is the ID of the document.
-
-# Un-delete academy item
-PUT http://localhost:9090/academy/restore/60fbd4a5c0e6850ef3951874
-where 60fbd4a5c0e6850ef3951874 is the ID of the document.
-
-# GET academy item
-GET http://localhost:9090/academy/60fbd4a5c0e6850ef3951874
-where 60fbd4a5c0e6850ef3951874 is the ID of the document.
-
-# UPDATE academy item
-PUT http://localhost:9090/academy/60fbd4a5c0e6850ef3951874
-where 60fbd4a5c0e6850ef3951874 is the ID of the document.
-
-BODY: 
-
-```bash
-{
-    "name":"Eran Peled - 2",
-    "ID" : 6782872,
-    "projects": [
-        {
-            "name":"mongodb",
-            "type":"lecture"
-        },
-        {
-            "name":"nodejs",
-            "type":"lecture"
-        }
-    ]
-}
 ```
