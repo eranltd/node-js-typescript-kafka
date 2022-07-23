@@ -1,6 +1,5 @@
 import { geo_location_event } from "../../models/GEOLocationEvent";
-// import the `Kafka` instance from the kafkajs library
-const { Kafka } = require("kafkajs");
+const { Kafka, Partitioners } = require("kafkajs");
 
 import MD5 from "../../helpers/MD5";
 // the client ID lets kafka know who's producing the messages
@@ -12,7 +11,9 @@ const topic = "events"; //TODO: move to .env variable
 
 // initialize a new kafka client and initialize a producer from it
 const kafka = new Kafka({ clientId, brokers });
-const producer = kafka.producer();
+const producer = kafka.producer({
+  createPartitioner: Partitioners.LegacyPartitioner,
+});
 
 const getRandomFriction = () => Math.floor(Math.random() * 10 ** 6) / 10 ** 6;
 const NUM_OF_SECONDS = 1000 * 5;
@@ -21,7 +22,7 @@ const produce = async () => {
   console.log(
     `Starting to produce dummy kafka messages every ${NUM_OF_SECONDS} millisecond's`
   );
-  console.log(`Topic : [${topic}]`);
+  console.log(`Producting to Kafka Topic : [${topic}]`); //TODO: move to winston
 
   await producer.connect();
 

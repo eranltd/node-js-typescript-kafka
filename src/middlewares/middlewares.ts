@@ -1,6 +1,5 @@
 const morgan = require("morgan");
 const config = require("../config/config");
-const logger = require("../logger");
 var winston = require("../config/winston");
 var bodyParser = require("body-parser");
 
@@ -19,7 +18,6 @@ export const loadAllMiddlewares = (app) => {
   );
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json({ limit: "5mb", type: "application/json" }));
-  // app.use(cors({ origin: process.env.CLIENT_URL }));
 
   // error handler
   app.use(function (err, req, res, next) {

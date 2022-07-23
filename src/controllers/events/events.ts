@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
     // initialize a new kafka client and initialize a producer from it
     const kafka = new Kafka({ clientId, brokers });
     const producer = kafka.producer();
+    await producer.connect();
     await producer.send({
       topic,
       messages: [
