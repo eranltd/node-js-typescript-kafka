@@ -1,8 +1,8 @@
-const GEOLocationScheme = require("../../interfaces/GEOLocationEvent");
-
+import { geo_location_event } from "../../models/GEOLocationEvent";
 // import the `Kafka` instance from the kafkajs library
 const { Kafka } = require("kafkajs");
 
+import MD5 from "../../helpers/MD5";
 // the client ID lets kafka know who's producing the messages
 const clientId = "mock-up-kafka-producer-client"; //TODO: move to .env variable
 // we can define the list of brokers in the cluster
@@ -20,26 +20,31 @@ const produce = async () => {
   console.log(`Topic : [${topic}]`);
 
   await producer.connect();
-  let i = 0;
 
   // after the produce has connected, we start an interval timer
   setInterval(async () => {
     try {
-      // send a message to the configured topic with
-      // the key and value formed from the current value of `i`
+      // send a message to the configured topic
+      const dummyLocationObject: geo_location_event = {
+        uuid: MD5(new Date().getTime()),
+        utc_timestamp: new Date().getTime(),
+        lat: 31 + Math.floor(Math.random() * 10 ** 6) / 10 ** 6,
+        lng: 35 + Math.floor(Math.random() * 10 ** 6) / 10 ** 6,
+        authorization_token: MD5("some dummy string"),
+      };
+
       await producer.send({
         topic,
         messages: [
           {
-            key: String(i),
-            value: "this is message " + i,
+            key: dummyLocationObject.uuid,
+            value: JSON.stringify(dummyLocationObject),
           },
         ],
       });
 
       // if the message is written successfully, log it and increment `i`
-      console.log("writes: ", i);
-      i++;
+      console.log("produced to kafka: ", JSON.stringify(dummyLocationObject));
     } catch (err) {
       console.error("could not write message " + err);
     }

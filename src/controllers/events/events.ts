@@ -1,6 +1,5 @@
 import express from "express";
 const winston = require("../../config/winston");
-const GEOLocationScheme = require("../../interfaces/GEOLocationEvent");
 const router = express.Router();
 
 // /**
