@@ -13,6 +13,7 @@ router.post("/", async (req, res) => {
   const messageBody = req.body;
 
   try {
+    //TODO: move the logic into kafka producer file.
     // the client ID lets kafka know who's producing the messages
     const clientId = "mock-up-kafka-producer-client"; //TODO: move to .env variable
     // we can define the list of brokers in the cluster
