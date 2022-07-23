@@ -15,11 +15,11 @@ const kafka = new Kafka({ clientId, brokers });
 const producer = kafka.producer();
 
 const getRandomFriction = () => Math.floor(Math.random() * 10 ** 6) / 10 ** 6;
-
+const NUM_OF_SECONDS = 1000 * 5;
 // we define an async function that writes a new message each second
 const produce = async () => {
   console.log(
-    "Starting to produce dummy kafka messages every 1000 millisecond's"
+    `Starting to produce dummy kafka messages every ${NUM_OF_SECONDS} millisecond's`
   );
   console.log(`Topic : [${topic}]`);
 
@@ -52,7 +52,7 @@ const produce = async () => {
     } catch (err) {
       console.error("could not write message " + err);
     }
-  }, 1000);
+  }, NUM_OF_SECONDS);
 };
 
 module.exports = produce;
