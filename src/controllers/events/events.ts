@@ -1,36 +1,42 @@
 import express from "express";
 const winston = require("../../config/winston");
 const router = express.Router();
+const { Kafka } = require("kafkajs");
 
 // /**
-//  *
-//  * Create and store new academy
-//  * @param {string} academy.name
-//  * @param {string} academy.ID
-//  * @param {Array<RuleCondition>} academy.projects
-//  * @param {string} academy.createdAt
-//  * @param {string} academy.updatedAt
-//  * Endpoint : POST http://localhost:<port>/academy
+//  * Produce a message to a topic
+//  * @param {string} topic_name
+//  * Endpoint : POST http://localhost:<port>/events/{topic_name}
 //  */
 
-// router.post("/", async (req, res) => {
-//   const { name, ID, projects } = req.body;
+router.post("/", async (req, res) => {
+  const messageBody = req.body;
 
-//   const academyInstance = new Academy({
-//     name,
-//     ID,
-//     projects,
-//   });
+  try {
+    // the client ID lets kafka know who's producing the messages
+    const clientId = "mock-up-kafka-producer-client"; //TODO: move to .env variable
+    // we can define the list of brokers in the cluster
+    const brokers = ["localhost:9092"]; //TODO: move to .env variable
+    // this is the topic to which we want to write messages
+    const topic = "events"; //TODO: move to .env variable
 
-//   try {
-//     //step 1 - save in db
-//     const resp = await academyInstance.save();
-//     res.status(201).json(resp);
-//   } catch (err) {
-//     res.status(400).json(err);
-//     winston.error(err);
-//   }
-// });
+    // initialize a new kafka client and initialize a producer from it
+    const kafka = new Kafka({ clientId, brokers });
+    const producer = kafka.producer();
+    await producer.send({
+      topic,
+      messages: [
+        {
+          value: messageBody,
+        },
+      ],
+    });
+    res.status(201).json(messageBody);
+  } catch (err) {
+    res.status(400).json(err);
+    winston.error(err);
+  }
+});
 
 // 1. POST /events/{topic_name}
 // Produce a message to a topic

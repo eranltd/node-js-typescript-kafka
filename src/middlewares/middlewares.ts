@@ -17,7 +17,7 @@ export const loadAllMiddlewares = (app) => {
       }
     )
   );
-  app.use(bodyParser.urlencoded());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json({ limit: "5mb", type: "application/json" }));
   // app.use(cors({ origin: process.env.CLIENT_URL }));
 
