@@ -1,11 +1,13 @@
 require("dotenv").config();
-const InitKafkaMockProducer = require("./kafka/producer");
+const winston = require("../config/winston");
+
+import { kafkaMockProducer } from "./kafka/producer";
 
 export const loadAllServices = async (app) => {
   try {
-    console.log(InitKafkaMockProducer);
-    await InitKafkaMockProducer();
+    await kafkaMockProducer();
   } catch (e) {
-    console.log("Error  loading services: ", e);
+    winston.error(`Error  loading services`);
+    winston.error(e.message);
   }
 };

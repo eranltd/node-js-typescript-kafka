@@ -5,6 +5,8 @@ const { Kafka } = require("kafkajs");
 
 // /**
 //  * Produce a message to a topic
+//  * The body is the message in JSON format.
+//  * This will place a new message in the topic named topic_name.
 //  * @param {string} topic_name
 //  * Endpoint : POST http://localhost:<port>/events/{topic_name}
 //  */
@@ -39,11 +41,6 @@ router.post("/", async (req, res) => {
     winston.error(err);
   }
 });
-
-// 1. POST /events/{topic_name}
-// Produce a message to a topic
-// The body is the message in JSON format.
-// This will place a new message in the topic named topic_name.
 
 // 2. GET /events/{topic_name}?timeout={ms}
 // Gets the next message from topic_name.

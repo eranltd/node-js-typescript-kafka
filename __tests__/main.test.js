@@ -15,7 +15,5 @@ describe("Testing :", () => {
 closeConnections = () => {
   // Closing the DB connection allows Jest to exit successfully.
   try {
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };

@@ -1,14 +1,15 @@
 import { geo_location_event } from "../../models/GEOLocationEvent";
+const winston = require("../../config/winston");
 const { Kafka, Partitioners } = require("kafkajs");
 
 import MD5 from "../../helpers/MD5";
 // the client ID lets kafka know who's producing the messages
-const clientId = "mock-up-kafka-producer-client"; //TODO: move to .env variable
-// we can define the list of brokers in the cluster
-const brokers = ["localhost:9092"]; //TODO: move to .env variable
-// this is the topic to which we want to write messages
-const topic = "events"; //TODO: move to .env variable
+const clientId = process.env.KAFKA_CLIENT_ID;
 
+// we can define the list of brokers in the cluster
+const brokers = [process.env.KAFKA_DEFAULT_BROKER];
+// this is the topic to which we want to write messages
+const defaultMockupTopic = process.env.KAFKA_MOCKUP_TOPIC;
 // initialize a new kafka client and initialize a producer from it
 const kafka = new Kafka({ clientId, brokers });
 const producer = kafka.producer({
@@ -17,14 +18,22 @@ const producer = kafka.producer({
 
 const getRandomFriction = () => Math.floor(Math.random() * 10 ** 6) / 10 ** 6;
 const NUM_OF_SECONDS = 1000 * 5;
+
 // we define an async function that writes a new message each second
-const produce = async () => {
+export const kafkaMockProducer = async () => {
   console.log(
     `Starting to produce dummy kafka messages every ${NUM_OF_SECONDS} millisecond's`
   );
-  console.log(`Producting to Kafka Topic : [${topic}]`); //TODO: move to winston
+  console.log(
+    `Producting kafka mock-up messages to Kafka Topic : [${defaultMockupTopic}]`
+  ); //TODO: move to winston
 
-  await producer.connect();
+  try {
+    await producer.connect();
+  } catch (e) {
+    winston.error("could not connect to kafka cluster");
+    winston.error(e.message);
+  }
 
   // after the produce has connected, we start an interval timer
   setInterval(async () => {
@@ -39,7 +48,7 @@ const produce = async () => {
       };
 
       await producer.send({
-        topic,
+        topic: defaultMockupTopic,
         messages: [
           {
             key: dummyLocationObject.uuid,
@@ -51,9 +60,25 @@ const produce = async () => {
       // if the message is written successfully, log it
       console.log("produced to kafka: ", JSON.stringify(dummyLocationObject));
     } catch (err) {
-      console.error("could not write message " + err);
+      winston.error("could not write message");
+      console.error(err.message);
     }
   }, NUM_OF_SECONDS);
 };
 
-module.exports = produce;
+export const kafkaProducer = async (topicName, key, value) => {
+  await producer.connect();
+  try {
+    await producer.send({
+      topicName,
+      messages: [
+        {
+          key: key,
+          value: value instanceof String ? value : JSON.stringify(value),
+        },
+      ],
+    });
+  } catch (err) {
+    console.error("could not write message " + err);
+  }
+};
