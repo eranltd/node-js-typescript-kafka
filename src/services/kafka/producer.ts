@@ -21,10 +21,10 @@ const NUM_OF_SECONDS = 1000 * 5;
 
 // we define an async function that writes a new message each second
 export const kafkaMockProducer = async () => {
-  console.log(
+  winston.info(
     `Starting to produce dummy kafka messages every ${NUM_OF_SECONDS} millisecond's`
   );
-  console.log(
+  winston.info(
     `Producting kafka mock-up messages to Kafka Topic : [${defaultMockupTopic}]`
   ); //TODO: move to winston
 
@@ -58,7 +58,11 @@ export const kafkaMockProducer = async () => {
       });
 
       // if the message is written successfully, log it
-      console.log("produced to kafka: ", JSON.stringify(dummyLocationObject));
+      winston.info(
+        `produced to kafka: ${
+          JSON.stringify(dummyLocationObject).substring(0, 100) + "..."
+        }`
+      );
     } catch (err) {
       winston.error("could not write message");
       console.error(err.message);
@@ -67,8 +71,8 @@ export const kafkaMockProducer = async () => {
 };
 
 export const kafkaProducer = async (topicName, key, value) => {
-  await producer.connect();
   try {
+    await producer.connect();
     await producer.send({
       topicName,
       messages: [

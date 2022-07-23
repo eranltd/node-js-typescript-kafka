@@ -1,7 +1,8 @@
 import express from "express";
 const winston = require("../../config/winston");
 const router = express.Router();
-const { Kafka } = require("kafkajs");
+import { kafkaProducer } from "../../services/kafka/producer";
+import MD5 from "../../helpers/MD5";
 
 // /**
 //  * Produce a message to a topic
@@ -11,30 +12,12 @@ const { Kafka } = require("kafkajs");
 //  * Endpoint : POST http://localhost:<port>/events/{topic_name}
 //  */
 
-router.post("/", async (req, res) => {
+router.post("/:topic_name", async (req, res) => {
   const messageBody = req.body;
 
   try {
-    //TODO: move the logic into kafka producer file.
-    // the client ID lets kafka know who's producing the messages
-    const clientId = "mock-up-kafka-producer-client"; //TODO: move to .env variable
-    // we can define the list of brokers in the cluster
-    const brokers = ["localhost:9092"]; //TODO: move to .env variable
-    // this is the topic to which we want to write messages
-    const topic = "events"; //TODO: move to .env variable
-
-    // initialize a new kafka client and initialize a producer from it
-    const kafka = new Kafka({ clientId, brokers });
-    const producer = kafka.producer();
-    await producer.connect();
-    await producer.send({
-      topic,
-      messages: [
-        {
-          value: messageBody,
-        },
-      ],
-    });
+    const { topic_name } = req.params;
+    await kafkaProducer(topic_name, MD5(topic_name), messageBody);
     res.status(201).json(messageBody);
   } catch (err) {
     res.status(400).json(err);
